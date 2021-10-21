@@ -1,0 +1,66 @@
+﻿@using System.Globalization
+@using System.Threading
+
+@inject NavigationManager Nav
+
+@namespace BlazorDashboardApp
+
+Culture:
+<select @bind="Culture" style="display: inline-block; height: 30px; border-color: #ccc">
+    @foreach(var culture in supportedCultures) {
+        <option value="@culture">@culture.DisplayName</option>
+    }
+</select>
+UICulture:
+<select @bind="UICulture" style="display: inline-block; height: 30px; border-color: #ccc">
+    @foreach(var culture in supportedUICultures) {
+        <option value="@culture">@culture.DisplayName</option>
+    }
+</select>
+
+@code {
+    [Parameter] public string Height { get; set; }
+
+    CultureInfo[] supportedCultures = new[] {
+        new CultureInfo("en-US"),
+        new CultureInfo("de-DE")
+    };
+    CultureInfo[] supportedUICultures = new[] {
+        new CultureInfo("en-US"),
+        new CultureInfo("de-DE")
+    };
+
+    protected override void OnInitialized() {
+        Culture = Thread.CurrentThread.CurrentCulture;
+        UICulture = Thread.CurrentThread.CurrentUICulture;
+    }
+
+    CultureInfo Culture {
+        get => Thread.CurrentThread.CurrentCulture;
+        set {
+            if(Thread.CurrentThread.CurrentCulture != value)
+                Redirect(value, Thread.CurrentThread.CurrentUICulture);
+        }
+    }
+
+    CultureInfo UICulture {
+        get => Thread.CurrentThread.CurrentUICulture;
+        set {
+            if(Thread.CurrentThread.CurrentUICulture != value)
+                Redirect(Thread.CurrentThread.CurrentCulture, value);
+        }
+    }
+
+    void Redirect(CultureInfo culture, CultureInfo uiCulture) {
+        var uri = new Uri(Nav.Uri)
+            .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+        var uriEscaped = Uri.EscapeDataString(uri);
+        var cultureEscaped = Uri.EscapeDataString(culture.Name);
+        var uiCultureEscaped = Uri.EscapeDataString(uiCulture.Name);
+
+        Nav.NavigateTo(
+            $"Culture/Set?culture={cultureEscaped}&uiCulture={uiCultureEscaped}&redirectUri={uriEscaped}",
+            forceLoad: true
+        );
+    }
+}
