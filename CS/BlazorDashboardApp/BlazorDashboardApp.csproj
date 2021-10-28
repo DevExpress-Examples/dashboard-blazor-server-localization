@@ -3,9 +3,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.AspNetCore.Dashboard" Version="21.2.3-pre-21293" />
-    <PackageReference Include="DevExpress.AspNetCore.Dashboard.de" Version="21.2.3-pre-21293" />
-    <PackageReference Include="DevExpress.Blazor.Dashboard" Version="21.2.3-pre-21293" />
+    <PackageReference Include="DevExpress.AspNetCore.Dashboard" Version="21.2.3" />
+    <PackageReference Include="DevExpress.AspNetCore.Dashboard.de" Version="21.2.3" />
+    <PackageReference Include="DevExpress.Blazor.Dashboard" Version="21.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
   </ItemGroup>
 
