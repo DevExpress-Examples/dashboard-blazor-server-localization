@@ -14,18 +14,17 @@ The app uses **satellite resource assemblies** to localize the Dashboard compone
 
 A custom [CultureSelector](./CS/BlazorDashboardApp/Components/CultureSelector.razor) UI component is implemented to allow users to change the culture at runtime. The app saves the current culture in a cookie.
 
+The [ResourceManager.setLocalizationMessages](https://docs.devexpress.com/Dashboard/js-DevExpress.Dashboard.ResourceManager?p=netframework#js_devexpress_dashboard_resourcemanager_setlocalizationmessages_static_localizationmessages_) method is used to localize the specified string at runtime (the "Export To" button's caption in the dashboard title).
+
 ![blazor-localized-dashboard](img/blazor-localized-dashboard.png)
 
-
-<!-- default file list -->
 ## Files to Look At
 
 * [Dashboard.razor](./CS/BlazorDashboardApp/Pages/Dashboard.razor)
 * [CultureSelector.razor](./CS/BlazorDashboardApp/Components/CultureSelector.razor)
 * [CultureController.cs](./CS/BlazorDashboardApp/Controllers/CultureController.cs)
-* [_Host.cshtml](./CS/BlazorDashboardApp/Pages/_Layout.cshtml#L40-L54)
-* [Startup.cs](./CS/BlazorDashboardApp/Program.cs)
-<!-- default file list end -->
+* [_Layout.cshtml](./CS/BlazorDashboardApp/Pages/_Layout.cshtml#L35-L49)
+* [Program.cs](./CS/BlazorDashboardApp/Program.cs)
 
 ## Documentation
 
