@@ -1,22 +1,53 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BlazorDashboardApp;
+using DevExpress.AspNetCore;
+using DevExpress.DashboardAspNetCore;
+using DevExpress.DashboardWeb;
+using Microsoft.Extensions.FileProviders;
 
-namespace BlazorDashboardApp {
-    public class Program {
-        public static void Main(string[] args) {
-            CreateHostBuilder(args).Build().Run();
-        }
+var builder = WebApplication.CreateBuilder(args);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+IFileProvider fileProvider = builder.Environment.ContentRootFileProvider;
+IConfiguration configuration = builder.Configuration;
+
+// Add services to the container.
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+
+builder.Services.AddDevExpressControls();
+builder.Services.AddMvc();
+
+builder.Services.AddScoped<DashboardConfigurator>((IServiceProvider serviceProvider) => {
+    return DashboardUtils.CreateDashboardConfigurator(configuration, fileProvider);
+});
+builder.Services.AddSingleton<IDashboardLocalizationProvider, DashboardLocalizationProvider>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseDevExpressControls();
+app.UseRouting();
+
+var supportedCultures = new[] { "en-US", "de-DE" };
+var supportedUICultures = new[] { "en-US", "de-DE" };
+var localizationOptions = new RequestLocalizationOptions()
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedUICultures)
+    .SetDefaultCulture(supportedCultures[0]);
+
+app.UseRequestLocalization(localizationOptions);
+
+EndpointRouteBuilderExtension.MapDashboardRoute(app, "api/dashboard", "DefaultDashboard");
+
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
+
+app.Run();
