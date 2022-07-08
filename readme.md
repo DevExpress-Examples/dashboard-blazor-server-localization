@@ -23,8 +23,8 @@ A custom [CultureSelector](./CS/BlazorDashboardApp/Components/CultureSelector.ra
 * [Dashboard.razor](./CS/BlazorDashboardApp/Pages/Dashboard.razor)
 * [CultureSelector.razor](./CS/BlazorDashboardApp/Components/CultureSelector.razor)
 * [CultureController.cs](./CS/BlazorDashboardApp/Controllers/CultureController.cs)
-* [_Host.cshtml](./CS/BlazorDashboardApp/Pages/_Host.cshtml#L29-L39)
-* [Startup.cs](./CS/BlazorDashboardApp/Startup.cs)
+* [_Host.cshtml](./CS/BlazorDashboardApp/Pages/_Layout.cshtml#L40-L54)
+* [Startup.cs](./CS/BlazorDashboardApp/Program.cs)
 <!-- default file list end -->
 
 ## Documentation
