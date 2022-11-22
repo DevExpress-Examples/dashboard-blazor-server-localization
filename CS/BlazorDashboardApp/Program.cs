@@ -45,7 +45,7 @@ var localizationOptions = new RequestLocalizationOptions()
 
 app.UseRequestLocalization(localizationOptions);
 
-EndpointRouteBuilderExtension.MapDashboardRoute(app, "api/dashboard", "DefaultDashboard");
+app.MapDashboardRoute("api/dashboard", "DefaultDashboard");
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
